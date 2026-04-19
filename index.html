@@ -32,6 +32,11 @@
 </head>
 <body class="bg-stone-50 text-stone-900">
 
+    <!-- Banner Membro Ativo -->
+    <div id="memberBanner" class="hidden bg-green-600 text-white text-center py-2 text-sm font-bold sticky top-0 z-[60]">
+        🌿 Membro 2dM Ativo | Acesso Prioritário Liberado
+    </div>
+
     <!-- Header -->
     <header class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -41,10 +46,12 @@
             <nav class="hidden md:flex gap-8 font-medium text-stone-600 items-center">
                 <a href="#produtos" class="hover:text-amber-700 transition">Produtos</a>
                 <a href="#kits" class="hover:text-amber-700 transition">Kits Xamânicos</a>
-                <a href="#artesaos" class="hover:text-amber-700 transition">Artesãos</a>
-                <a href="#cadastro-item" class="hover:text-amber-700 transition">Trocas</a>
-                <button onclick="openMemberModal()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white transition">
-                    👤 Membro 2dM
+                <a href="#areaMembro" id="navAreaMembro" class="hidden hover:text-amber-700 transition font-bold text-green-700">Painel de Trocas</a>
+                <button id="btnLogin" onclick="openLogin()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white transition">
+                    Entrar como Membro
+                </button>
+                <button id="btnMemberInfo" onclick="openMemberModal()" class="border border-stone-200 text-stone-600 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-stone-100 transition">
+                    👤 Sobre Membros
                 </button>
                 <a href="#carrinho" class="relative hover:text-amber-700 transition">
                     <i class="fas fa-shopping-cart text-xl"></i>
@@ -79,6 +86,43 @@
                             ✨ Novos Tepis da Aldeia Cariri-Xocó acabaram de chegar! • 📦 Entrega física garantida para todo o Brasil • 🌿 Kits Xamânicos exclusivos para meditação • 🤝 Apoie o artesanato originário direto da fonte • 🎨 Novas Pulseiras Tuka com grafismos ancestrais • 
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Área Exclusiva Membro (Painel de Trocas) -->
+    <section id="areaMembro" class="hidden py-20 px-6 bg-green-50 border-b border-green-100">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl shadow-lg shadow-green-200">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-green-900">🌿 Painel de Trocas</h2>
+                    <p class="text-green-700">Você tem acesso prioritário às trocas ativas da comunidade.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white p-6 rounded-2xl border border-green-200 shadow-sm hover:shadow-md transition">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Troca Ativa</span>
+                        <span class="text-xs text-stone-400">Há 2 dias</span>
+                    </div>
+                    <h4 class="font-bold text-stone-800 mb-2">Tambor Xamânico ↔ Instrumentos</h4>
+                    <p class="text-sm text-stone-600 mb-4">Membro busca flauta nativa em troca de tambor artesanal.</p>
+                    <button onclick="openExchangeForm('Troca: Tambor Xamânico')" class="text-sm font-bold text-green-600 hover:underline">Ver detalhes e propor ➔</button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-green-200 shadow-sm hover:shadow-md transition">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Troca Ativa</span>
+                        <span class="text-xs text-stone-400">Há 5 horas</span>
+                    </div>
+                    <h4 class="font-bold text-stone-800 mb-2">Pulseiras Tuka ↔ Cristais</h4>
+                    <p class="text-sm text-stone-600 mb-4">Troca de conjunto de pulseiras por cristais naturais (quartzo/ametista).</p>
+                    <button onclick="openExchangeForm('Troca: Pulseiras Tuka')" class="text-sm font-bold text-green-600 hover:underline">Ver detalhes e propor ➔</button>
                 </div>
             </div>
         </div>
@@ -285,54 +329,17 @@
         </div>
     </section>
 
-    <!-- Artesãos Section -->
-    <section id="artesaos" class="py-20 px-6 bg-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-amber-900 mb-12 text-center">Conheça Nossos Artesãos</h2>
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <div class="text-center">
-                    <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white shadow-sm">
-                        <img src="https://via.placeholder.com/150?text=Artesão" alt="Artesão" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-stone-800">Mestres da Aldeia</h3>
-                    <p class="text-stone-500 text-sm">Preservando técnicas ancestrais da Aldeia Cariri-Xocó.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white shadow-sm">
-                        <img src="https://via.placeholder.com/150?text=Artesão" alt="Artesão" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-stone-800">Artesãos 2dM</h3>
-                    <p class="text-stone-500 text-sm">Criatividade e sustentabilidade em cada peça.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white shadow-sm">
-                        <img src="https://via.placeholder.com/150?text=Artesão" alt="Artesão" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-stone-800">Parceiros Originários</h3>
-                    <p class="text-stone-500 text-sm">Unindo forças para promover a arte verdadeira.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="bg-stone-900 text-white py-16 px-6">
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-7xl mx-auto text-center md:text-left">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-2">
                     <h3 class="text-2xl font-bold mb-6 text-amber-500">2dM Artesanato</h3>
                     <p class="text-stone-400 max-w-md mb-6">Promovendo artes originárias com autenticidade comprovada. Valorizamos o trabalho manual e a cultura ancestral.</p>
-                    <div class="flex gap-4">
+                    <div class="flex justify-center md:justify-start gap-4">
                         <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-amber-700 transition"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-amber-700 transition"><i class="fab fa-whatsapp"></i></a>
                     </div>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-6 text-stone-200">Links Úteis</h4>
-                    <ul class="space-y-4 text-stone-400">
-                        <li><a href="#" class="hover:text-white transition">Página Oficial 2dM</a></li>
-                        <li><a href="#artesaos" class="hover:text-white transition">Sobre Nós</a></li>
-                    </ul>
                 </div>
                 <div>
                     <h4 class="font-bold mb-6 text-stone-200">Contato</h4>
@@ -348,28 +355,38 @@
 
     <!-- MODAIS -->
 
-    <!-- Member Modal -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4">
+        <div class="bg-white p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl">
+            <h3 class="text-2xl font-bold text-amber-900 mb-4">Acesso Membro 2dM</h3>
+            <p class="text-sm text-stone-500 mb-6">Insira seu e-mail cadastrado para acessar o Painel de Trocas.</p>
+            <input id="loginEmail" placeholder="Seu email" class="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 mb-4">
+            <button onclick="loginMembro()" class="w-full bg-amber-900 text-white py-4 rounded-xl font-bold hover:bg-amber-800 transition mb-4">
+                Entrar
+            </button>
+            <button onclick="closeLogin()" class="text-stone-400 text-sm">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Member Info Modal -->
     <div id="memberModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4">
         <div class="bg-white p-8 rounded-3xl max-w-md w-full text-center shadow-2xl">
-            <h3 class="text-2xl font-bold text-amber-900 mb-4">Acesso ao Ateliê 2dM</h3>
+            <h3 class="text-2xl font-bold text-amber-900 mb-4">Torne-se Membro do Ateliê 2dM</h3>
             <p class="text-sm text-stone-600 mb-8 text-left">
-                Para participar das trocas, é necessário:
+                Para participar das trocas e acessar o painel exclusivo, é necessário:
                 <br>• Doação de R$10 OU  
                 <br>• Receber o livro "Início do Caminhar"
                 <br><br>
-                <span class="italic text-xs text-amber-700">A validação é feita manualmente pelo Guardião para garantir a qualidade da rede.</span>
+                <span class="italic text-xs text-amber-700">A validação é feita manualmente pelo Guardião.</span>
             </p>
             <button onclick="joinViaWhats()" class="w-full bg-green-600 text-white py-4 rounded-xl mb-4 font-bold hover:bg-green-700 transition">
                 Falar com Guardião (WhatsApp)
             </button>
-            <a href="https://forms.gle/SEU_FORM_AQUI" target="_blank" class="block w-full border-2 border-stone-100 py-4 rounded-xl mb-4 font-bold hover:bg-stone-50 transition">
-                Preencher Cadastro
-            </a>
             <button onclick="closeMemberModal()" class="text-stone-400 hover:text-stone-600 transition text-sm">Fechar</button>
         </div>
     </div>
 
-    <!-- Exchange Modal (Beta Version) -->
+    <!-- Exchange Modal -->
     <div id="exchangeModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4">
         <div class="bg-white p-6 rounded-2xl max-w-md w-full shadow-2xl">
             <h3 class="font-bold mb-4 text-lg text-amber-900">Propor Troca</h3>
@@ -379,34 +396,23 @@
                 <input id="ex_whats" placeholder="Seu WhatsApp" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
                 <input id="ex_item" placeholder="Item desejado" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
                 <textarea id="ex_oferta" placeholder="O que você oferece?" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500" rows="3"></textarea>
-                <input id="ex_link" placeholder="Link do item (opcional)" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
                 
                 <div class="flex gap-2 pt-2">
-                    <button onclick="sendWhatsExchange()" class="w-1/2 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">
-                        WhatsApp
-                    </button>
-                    <button onclick="sendEmailExchange()" class="w-1/2 bg-amber-900 text-white py-3 rounded-xl font-bold hover:bg-amber-800 transition">
-                        Email
-                    </button>
+                    <button onclick="sendWhatsExchange()" class="w-1/2 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">WhatsApp</button>
+                    <button onclick="sendEmailExchange()" class="w-1/2 bg-amber-900 text-white py-3 rounded-xl font-bold hover:bg-amber-800 transition">Email</button>
                 </div>
                 <button onclick="closeExchangeModal()" class="w-full text-stone-400 text-sm mt-2">Cancelar</button>
             </div>
         </div>
     </div>
 
-    <!-- Post Send Modal (Group Access) -->
+    <!-- Post Send Modal -->
     <div id="postSendModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[110] p-4">
         <div class="bg-white p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl border-2 border-amber-100">
-            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-                <i class="fas fa-check"></i>
-            </div>
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fas fa-check"></i></div>
             <h3 class="font-bold text-xl mb-3 text-stone-800">Proposta enviada! 🌿</h3>
-            <p class="text-sm text-stone-600 mb-8">
-                Sua proposta foi gerada com sucesso. Deseja entrar no nosso grupo exclusivo de trocas para acompanhar as novidades?
-            </p>
-            <button onclick="goToGroup()" class="w-full bg-green-600 text-white py-4 rounded-xl mb-4 font-bold hover:bg-green-700 transition shadow-lg">
-                Entrar no Grupo
-            </button>
+            <p class="text-sm text-stone-600 mb-8">Deseja entrar no nosso grupo exclusivo de trocas?</p>
+            <button onclick="goToGroup()" class="w-full bg-green-600 text-white py-4 rounded-xl mb-4 font-bold hover:bg-green-700 transition shadow-lg">Entrar no Grupo</button>
             <button onclick="closePostModal()" class="text-stone-400 hover:text-stone-600 transition text-sm">Permanecer no site</button>
         </div>
     </div>
@@ -415,7 +421,7 @@
     <div id="qrModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-6">
         <div class="bg-white rounded-3xl max-w-sm w-full p-8 text-center shadow-2xl">
             <h3 class="text-2xl font-bold text-amber-900 mb-2">Pagamento via Pix</h3>
-            <p class="text-stone-500 text-sm mb-6">Escaneie o QR Code ou use o e-mail: <br><strong>contatos.2dm@gmail.com</strong></p>
+            <p class="text-stone-500 text-sm mb-6">E-mail: <strong>contatos.2dm@gmail.com</strong></p>
             <div class="bg-stone-50 p-4 rounded-2xl mb-6 border border-stone-100">
                 <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663124222205/vmWifenzaPICUctf.png" alt="QR Code Pix" class="w-full aspect-square object-contain">
             </div>
@@ -424,14 +430,49 @@
     </div>
 
     <script>
+        // --- BASE DE DADOS E ESTADO ---
+        const membrosValidados = ["contatos.2dm@gmail.com", "membro@2dm.com"]; // Adicione seus e-mails aqui
+        let usuarioLogado = null;
         let cart = [];
         const whatsappNumber = "5511992451218";
-        const groupLink = "https://chat.whatsapp.com/SEU_LINK_DO_GRUPO"; // Substitua pelo link real
-        
-        // Membros pré-cadastrados (Modo Beta)
-        const membrosCadastrados = ["contatos.2dm@gmail.com"];
+        const groupLink = "https://chat.whatsapp.com/SEU_LINK_DO_GRUPO";
 
-        // Filtro de Busca Dinâmico
+        // --- SISTEMA DE LOGIN ---
+        function openLogin() { document.getElementById("loginModal").classList.remove("hidden"); }
+        function closeLogin() { document.getElementById("loginModal").classList.add("hidden"); }
+
+        function loginMembro() {
+            const email = document.getElementById("loginEmail").value.toLowerCase().trim();
+            if (membrosValidados.includes(email)) {
+                usuarioLogado = email;
+                localStorage.setItem("2dm_user", email);
+                liberarAreaMembro();
+                closeLogin();
+                alert("Bem-vindo, membro 2dM 🌿");
+            } else {
+                alert("E-mail não encontrado. Solicite acesso ao Guardião.");
+            }
+        }
+
+        function liberarAreaMembro() {
+            document.getElementById("areaMembro").classList.remove("hidden");
+            document.getElementById("memberBanner").classList.remove("hidden");
+            document.getElementById("navAreaMembro").classList.remove("hidden");
+            document.getElementById("btnLogin").textContent = "Membro Ativo";
+            document.getElementById("btnLogin").classList.replace("border-amber-900", "bg-green-600");
+            document.getElementById("btnLogin").classList.replace("text-amber-900", "text-white");
+        }
+
+        // --- INICIALIZAÇÃO ---
+        window.onload = function() {
+            const savedUser = localStorage.getItem("2dm_user");
+            if (savedUser && membrosValidados.includes(savedUser)) {
+                usuarioLogado = savedUser;
+                liberarAreaMembro();
+            }
+        }
+
+        // --- FILTRO DE BUSCA ---
         function filterProducts(query) {
             const cards = document.querySelectorAll(".product-card");
             cards.forEach(card => {
@@ -440,7 +481,7 @@
             });
         }
 
-        // Funções do Carrinho
+        // --- CARRINHO ---
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCartUI();
@@ -454,154 +495,79 @@
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
             const cartBadge = document.getElementById('cartBadge');
-            
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p class="text-stone-400 text-center italic">Seu carrinho está vazio.</p>';
                 cartTotal.textContent = 'R$ 0,00';
                 cartBadge.classList.add('hidden');
                 return;
             }
-
             cartBadge.textContent = cart.length;
             cartBadge.classList.remove('hidden');
-
             cartItems.innerHTML = cart.map((item, index) => `
                 <div class="flex justify-between items-center bg-stone-50 p-4 rounded-xl border border-stone-100">
-                    <div>
-                        <p class="font-bold text-stone-800">${item.name}</p>
-                        <p class="text-xs text-stone-500">Artesanato Originário</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <span class="font-bold text-amber-800">R$ ${item.price.toFixed(2)}</span>
-                        <button onclick="removeFromCart(${index})" class="text-stone-300 hover:text-red-500 transition">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+                    <div><p class="font-bold text-stone-800">${item.name}</p><p class="text-xs text-stone-500">Artesanato Originário</p></div>
+                    <div class="flex items-center gap-4"><span class="font-bold text-amber-800">R$ ${item.price.toFixed(2)}</span>
+                    <button onclick="removeFromCart(${index})" class="text-stone-300 hover:text-red-500 transition"><i class="fas fa-times"></i></button></div>
                 </div>
             `).join('');
-
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             cartTotal.textContent = `R$ ${total.toFixed(2)}`;
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
+        function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
 
         function finishOrder() {
-            if (cart.length === 0) {
-                alert("Seu carrinho está vazio!");
-                return;
-            }
+            if (cart.length === 0) return alert("Seu carrinho está vazio!");
             const total = cart.reduce((sum, item) => sum + item.price, 0);
-            let message = "🌿 *Novo Pedido - 2dM Artesanato*\n\n";
-            cart.forEach((item, i) => {
-                message += `${i + 1}. *${item.name}* - R$ ${item.price.toFixed(2)}\n`;
-            });
-            message += `\n💰 *Total: R$ ${total.toFixed(2)}*\n\nGratidão! 🙏`;
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            let msg = "🌿 *Novo Pedido - 2dM*\n\n";
+            cart.forEach((item, i) => msg += `${i + 1}. *${item.name}* - R$ ${item.price.toFixed(2)}\n`);
+            msg += `\n💰 *Total: R$ ${total.toFixed(2)}*\n\nGratidão! 🙏`;
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // --- LÓGICA DE TROCAS (BETA) ---
-
+        // --- TROCAS ---
         function buildExchangeMessage() {
             const nome = document.getElementById("ex_nome").value;
             const email = document.getElementById("ex_email").value;
             const whats = document.getElementById("ex_whats").value;
             const item = document.getElementById("ex_item").value;
             const oferta = document.getElementById("ex_oferta").value;
-            const link = document.getElementById("ex_link").value;
-            
-            const isMembro = membrosCadastrados.includes(email.toLowerCase());
-            const statusMembro = isMembro ? "✅ MEMBRO CADASTRADO" : "⏳ NOVO INTERESSADO";
-
-            return `🌿 *Proposta de Troca - Ateliê 2dM*\n\n` +
-                   `Status: ${statusMembro}\n` +
-                   `👤 Nome: ${nome}\n` +
-                   `📧 Email: ${email}\n` +
-                   `📱 WhatsApp: ${whats}\n\n` +
-                   `🎯 Item desejado: ${item}\n` +
-                   `🔄 Oferta: ${oferta}\n` +
-                   `🔗 Link: ${link || 'Não informado'}\n\n` +
-                   `--- \nEnviado via Ateliê 2dM`;
+            const isMembro = membrosValidados.includes(email.toLowerCase());
+            return `🌿 *Proposta de Troca - Ateliê 2dM*\n\nStatus: ${isMembro ? "✅ MEMBRO" : "⏳ VISITANTE"}\n👤 Nome: ${nome}\n📧 Email: ${email}\n📱 WhatsApp: ${whats}\n\n🎯 Item: ${item}\n🔄 Oferta: ${oferta}\n\n--- \nEnviado via Ateliê 2dM`;
         }
 
-        function sendWhatsExchange() {
-            const msg = buildExchangeMessage();
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-            showPostSendOptions();
-        }
+        function sendWhatsExchange() { window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(buildExchangeMessage())}`, '_blank'); showPostSendOptions(); }
+        function sendEmailExchange() { window.location.href = `mailto:contatos.2dm@gmail.com?subject=Troca 2dM&body=${encodeURIComponent(buildExchangeMessage())}`; showPostSendOptions(); }
 
-        function sendEmailExchange() {
-            const subject = "Proposta de Troca - Ateliê 2dM";
-            const body = buildExchangeMessage();
-            window.location.href = `mailto:contatos.2dm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            showPostSendOptions();
-        }
-
-        // --- LÓGICA DE CADASTRO DE ITEM ---
-
+        // --- CADASTRO ITEM ---
         function buildItemMessage() {
-            const nome = document.getElementById("it_nome").value;
-            const cat = document.getElementById("it_cat").value;
-            const qtd = document.getElementById("it_qtd").value;
-            const loc = document.getElementById("it_loc").value;
-            const desc = document.getElementById("it_desc").value;
-            const foto = document.getElementById("it_foto").value;
-
-            return `📦 *Novo Item para Troca - Ateliê 2dM*\n\n` +
-                   `Nome: ${nome}\n` +
-                   `Categoria: ${cat}\n` +
-                   `Quantidade: ${qtd}\n` +
-                   `Localização: ${loc}\n` +
-                   `Descrição: ${desc}\n` +
-                   `Foto: ${foto || 'Não informado'}\n\n` +
-                   `--- \nSolicitação de cadastro manual`;
+            const n = document.getElementById("it_nome").value;
+            const c = document.getElementById("it_cat").value;
+            const l = document.getElementById("it_loc").value;
+            const d = document.getElementById("it_desc").value;
+            return `📦 *Novo Item para Troca*\n\nNome: ${n}\nCat: ${c}\nLoc: ${l}\nDesc: ${d}\n\n--- \nCadastro manual`;
         }
-
-        function sendWhatsItem() {
-            const msg = buildItemMessage();
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendEmailItem() {
-            const subject = "Novo Item para Troca - Ateliê 2dM";
-            const body = buildItemMessage();
-            window.location.href = `mailto:contatos.2dm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        }
+        function sendWhatsItem() { window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(buildItemMessage())}`, '_blank'); }
+        function sendEmailItem() { window.location.href = `mailto:contatos.2dm@gmail.com?subject=Novo Item 2dM&body=${encodeURIComponent(buildItemMessage())}`; }
 
         // --- MODAIS ---
-
         function openMemberModal() { document.getElementById('memberModal').classList.remove('hidden'); }
         function closeMemberModal() { document.getElementById('memberModal').classList.add('hidden'); }
-        
-        function openExchangeForm(item) {
-            document.getElementById("exchangeModal").classList.remove("hidden");
-            document.getElementById("ex_item").value = item;
-        }
+        function openExchangeForm(item) { document.getElementById("exchangeModal").classList.remove("hidden"); document.getElementById("ex_item").value = item; }
         function closeExchangeModal() { document.getElementById('exchangeModal').classList.add('hidden'); }
-
-        function showPostSendOptions() {
-            closeExchangeModal();
-            document.getElementById("postSendModal").classList.remove("hidden");
-        }
+        function showPostSendOptions() { closeExchangeModal(); document.getElementById("postSendModal").classList.remove("hidden"); }
         function closePostModal() { document.getElementById("postSendModal").classList.add("hidden"); }
         function goToGroup() { window.open(groupLink, "_blank"); }
-
         function openQRModal() { document.getElementById('qrModal').classList.remove('hidden'); }
         function closeQRModal() { document.getElementById('qrModal').classList.add('hidden'); }
+        function joinViaWhats() { window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Olá! Quero me tornar membro do Ateliê 2dM 🌿")}`, '_blank'); }
 
-        function joinViaWhats() {
-            const msg = encodeURIComponent("Olá! Quero me tornar membro do Ateliê 2dM 🌿");
-            window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
-        }
-
-        window.onclick = function(event) {
-            if (event.target.id === 'memberModal') closeMemberModal();
-            if (event.target.id === 'exchangeModal') closeExchangeModal();
-            if (event.target.id === 'postSendModal') closePostModal();
-            if (event.target.id === 'qrModal') closeQRModal();
+        window.onclick = function(e) {
+            if (e.target.id === 'loginModal') closeLogin();
+            if (e.target.id === 'memberModal') closeMemberModal();
+            if (e.target.id === 'exchangeModal') closeExchangeModal();
+            if (e.target.id === 'postSendModal') closePostModal();
+            if (e.target.id === 'qrModal') closeQRModal();
         }
     </script>
 </body>
