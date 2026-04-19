@@ -46,7 +46,7 @@
         🌿 Membro 2dM Ativo | Acesso Prioritário Liberado
     </div>
 
-    <!-- Header Corrigido -->
+    <!-- Header -->
     <header class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
@@ -57,6 +57,7 @@
             <nav class="hidden md:flex gap-6 font-medium text-stone-600 items-center">
                 <a href="#produtos" class="hover:text-amber-700 transition">Produtos</a>
                 <a href="#kits" class="hover:text-amber-700 transition">Kits</a>
+                <a href="#artesaos" class="hover:text-amber-700 transition">Artesãos</a>
                 <a href="#areaMembro" id="navAreaMembro" class="hidden hover:text-amber-700 transition font-bold text-green-700">Painel de Trocas</a>
                 <button onclick="openMemberModal()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white transition">
                     👤 Membro 2dM
@@ -87,6 +88,7 @@
         <button onclick="toggleMobileMenu()" class="self-end text-2xl text-stone-400 mb-4"><i class="fas fa-times"></i></button>
         <a href="#produtos" onclick="toggleMobileMenu()" class="text-lg font-bold text-stone-800">Produtos</a>
         <a href="#kits" onclick="toggleMobileMenu()" class="text-lg font-bold text-stone-800">Kits</a>
+        <a href="#artesaos" onclick="toggleMobileMenu()" class="text-lg font-bold text-stone-800">Artesãos</a>
         <a href="#areaMembro" id="navAreaMembroMobile" onclick="toggleMobileMenu()" class="hidden text-lg font-bold text-green-700">Painel de Trocas</a>
         <button onclick="openMemberModal(); toggleMobileMenu()" class="bg-amber-900 text-white py-3 rounded-xl font-bold">👤 Membro 2dM</button>
         <hr class="border-stone-100">
@@ -148,7 +150,7 @@
         </div>
     </section>
 
-    <!-- Produtos Section (RESTAURADO) -->
+    <!-- Produtos Section -->
     <section id="produtos" class="py-20 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
@@ -245,7 +247,7 @@
         </div>
     </section>
 
-    <!-- Kits Xamânicos Section (RESTAURADO) -->
+    <!-- Kits Xamânicos Section -->
     <section id="kits" class="py-20 px-6 bg-stone-100">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold text-amber-900 mb-12 text-center">Kits Xamânicos Exclusivos</h2>
@@ -277,6 +279,36 @@
                     </ul>
                     <p class="text-2xl font-bold text-amber-900 mb-6">R$ 580,00</p>
                     <button onclick="addToCart('Kit Completo', 580)" class="w-full py-3 border-2 border-stone-900 rounded-xl font-bold hover:bg-stone-900 hover:text-white transition">Adicionar Kit</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artesãos Section -->
+    <section id="artesaos" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-amber-900 mb-12 text-center">Conheça Nossos Artesãos</h2>
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="text-center">
+                    <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white shadow-sm">
+                        <img src="https://via.placeholder.com/150?text=Artesão" alt="Artesão" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800">Mestres da Aldeia</h3>
+                    <p class="text-stone-500 text-sm">Preservando técnicas ancestrais da Aldeia Cariri-Xocó.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white shadow-sm">
+                        <img src="https://via.placeholder.com/150?text=Artesão" alt="Artesão" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800">Artesãos 2dM</h3>
+                    <p class="text-stone-500 text-sm">Criatividade e sustentabilidade em cada peça.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white shadow-sm">
+                        <img src="https://via.placeholder.com/150?text=Artesão" alt="Artesão" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800">Parceiros Originários</h3>
+                    <p class="text-stone-500 text-sm">Unindo forças para promover a arte verdadeira.</p>
                 </div>
             </div>
         </div>
@@ -363,20 +395,27 @@
         </div>
     </div>
 
-    <!-- Member Info Modal -->
+    <!-- Member Info Modal (FORMULÁRIO DE PATROCINADOR) -->
     <div id="memberModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4">
-        <div class="bg-white p-8 rounded-3xl max-w-md w-full text-center shadow-2xl">
-            <h3 class="text-2xl font-bold text-amber-900 mb-4">Torne-se Membro 🌿</h3>
-            <div class="text-sm text-stone-600 mb-8 text-left space-y-4">
-                <p>Para participar das trocas e acessar o painel exclusivo, é necessário:</p>
-                <ul class="space-y-2">
-                    <li>• Doação de <strong>R$ 10,00</strong> OU</li>
-                    <li>• Receber o livro <strong>"Início do Caminhar"</strong> (Ebook incluso)</li>
-                </ul>
+        <div class="bg-white p-8 rounded-3xl max-w-md w-full shadow-2xl overflow-y-auto max-h-[90vh]">
+            <h3 class="text-2xl font-bold text-amber-900 mb-2 text-center">Torne-se um Artesão Patrocinador 🌿</h3>
+            <p class="text-xs text-stone-500 mb-6 text-center">Doação de R$10 p/ Ebook "Início do Caminhar" e Acesso Comunidade.</p>
+            
+            <form id="sponsorForm" class="space-y-3">
+                <input id="sp_nome" placeholder="Seu Nome" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
+                <input id="sp_email" type="email" placeholder="Seu E-mail" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
+                <input id="sp_whats" placeholder="Seu WhatsApp" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
+                <textarea id="sp_conexao" placeholder="Como você se conecta com a Arte? (Até 250 caracteres)" maxlength="250" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500" rows="3"></textarea>
+                
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="sendWhatsSponsor()" class="w-1/2 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">WhatsApp</button>
+                    <button type="button" onclick="sendEmailSponsor()" class="w-1/2 bg-amber-900 text-white py-3 rounded-xl font-bold hover:bg-amber-800 transition">Email</button>
+                </div>
+            </form>
+            
+            <div class="mt-6 pt-6 border-t border-stone-100 text-center">
+                <button onclick="closeMemberModal()" class="text-stone-400 text-sm hover:text-stone-600">Fechar</button>
             </div>
-            <button onclick="joinViaWhats()" class="w-full bg-green-600 text-white py-4 rounded-xl mb-3 font-bold hover:bg-green-700 transition">Falar com Guardião</button>
-            <a href="https://forms.gle/SEU_FORM_AQUI" target="_blank" class="block w-full border-2 border-stone-100 py-4 rounded-xl mb-4 font-bold hover:bg-stone-50 transition">Preencher Cadastro</a>
-            <button onclick="closeMemberModal()" class="text-stone-400 text-sm hover:text-stone-600">Fechar</button>
         </div>
     </div>
 
@@ -472,7 +511,7 @@
             const items = document.getElementById('cartItems');
             const total = document.getElementById('cartTotal');
             if (cart.length === 0) {
-                items.innerHTML = '<p class="text-stone-400 text-center italic">Vazio.</p>';
+                items.innerHTML = '<p class="text-stone-400 text-center italic">Seu carrinho está vazio.</p>';
                 total.textContent = 'R$ 0,00';
                 return;
             }
@@ -492,7 +531,17 @@
         function closeExchangeModal() { document.getElementById('exchangeModal').classList.add('hidden'); }
         function openQRModal() { document.getElementById('qrModal').classList.remove('hidden'); }
         function closeQRModal() { document.getElementById('qrModal').classList.add('hidden'); }
-        function joinViaWhats() { window.open(`https://wa.me/${whatsappNumber}?text=Olá! Quero me tornar membro do Ateliê 2dM 🌿`, '_blank'); }
+
+        // --- SISTEMA DE PATROCINADOR (MEMBRO) ---
+        function buildSponsorMessage() {
+            const n = document.getElementById("sp_nome").value;
+            const e = document.getElementById("sp_email").value;
+            const w = document.getElementById("sp_whats").value;
+            const c = document.getElementById("sp_conexao").value;
+            return `🌿 *Novo Artesão Patrocinador*\n\nNome: ${n}\nEmail: ${e}\nWhatsApp: ${w}\nConexão: ${c}\n\n--- \nSolicitação de Membro 2dM`;
+        }
+        function sendWhatsSponsor() { window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(buildSponsorMessage())}`, '_blank'); }
+        function sendEmailSponsor() { window.location.href = `mailto:contatos.2dm@gmail.com?subject=Novo Patrocinador 2dM&body=${encodeURIComponent(buildSponsorMessage())}`; }
 
         function sendWhatsExchange() {
             const m = `🌿 *Proposta de Troca*\n\nItem: ${document.getElementById("ex_item").value}\nOferta: ${document.getElementById("ex_oferta").value}`;
