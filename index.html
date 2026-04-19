@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@700&display=swap');
         
-        body { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
         h1, h2, h3 { font-family: 'Playfair+Display', serif; }
         
         .news-ticker {
@@ -27,6 +27,7 @@
         }
         .product-card:hover img { transform: scale(1.05); }
         .transition-all { transition: all 0.3s ease; }
+        .hidden { display: none; }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-900">
@@ -37,10 +38,14 @@
             <div class="flex items-center gap-4">
                 <h1 class="text-2xl font-bold text-amber-900">2dM Artesanato</h1>
             </div>
-            <nav class="hidden md:flex gap-8 font-medium text-stone-600">
+            <nav class="hidden md:flex gap-8 font-medium text-stone-600 items-center">
                 <a href="#produtos" class="hover:text-amber-700 transition">Produtos</a>
                 <a href="#kits" class="hover:text-amber-700 transition">Kits Xamânicos</a>
                 <a href="#artesaos" class="hover:text-amber-700 transition">Artesãos</a>
+                <a href="#cadastro-item" class="hover:text-amber-700 transition">Trocas</a>
+                <button onclick="openMemberModal()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white transition">
+                    👤 Membro 2dM
+                </button>
                 <a href="#carrinho" class="relative hover:text-amber-700 transition">
                     <i class="fas fa-shopping-cart text-xl"></i>
                     <span id="cartBadge" class="absolute -top-2 -right-3 bg-amber-700 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
@@ -82,18 +87,31 @@
     <!-- Produtos Section -->
     <section id="produtos" class="py-20 px-6">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                 <div>
                     <h2 class="text-3xl font-bold text-amber-900 mb-2">Catálogo de Artes</h2>
                     <p class="text-stone-500">Peças únicas com autenticidade comprovada.</p>
                 </div>
+                
+                <!-- Barra de Busca -->
+                <div class="w-full max-w-md">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-stone-400"></i>
+                        <input 
+                            oninput="filterProducts(this.value)" 
+                            placeholder="Buscar itens..." 
+                            class="w-full pl-12 pr-4 py-3 bg-white border border-stone-200 rounded-2xl focus:ring-2 focus:ring-amber-500 outline-none transition-all shadow-sm"
+                        >
+                    </div>
+                </div>
+
                 <div class="flex gap-2">
                     <span class="px-4 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">Entrega Garantida</span>
                     <span class="px-4 py-1 bg-stone-200 text-stone-700 rounded-full text-xs font-bold">Artesanato Real</span>
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Pentes -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all hover:shadow-md">
                     <div class="h-64 overflow-hidden bg-stone-200">
@@ -104,9 +122,12 @@
                         <p class="text-stone-500 text-sm mb-4">Sustentabilidade e arte em cada detalhe.</p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold text-amber-800">R$ 45,00</span>
-                            <button onclick="addToCart('Pentes Tampa Reciclada', 45)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <div class="flex gap-2">
+                                <button onclick="openExchangeForm('Pentes Tampa Reciclada')" class="text-xs text-amber-700 underline">🔄 Troca</button>
+                                <button onclick="addToCart('Pentes Tampa Reciclada', 45)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,9 +142,12 @@
                         <p class="text-stone-500 text-sm mb-4">Instrumento sagrado para aplicação de rapé.</p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold text-amber-800">R$ 120,00</span>
-                            <button onclick="addToCart('Tepis 01', 120)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <div class="flex gap-2">
+                                <button onclick="openExchangeForm('Tepis 01')" class="text-xs text-amber-700 underline">🔄 Troca</button>
+                                <button onclick="addToCart('Tepis 01', 120)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,111 +162,12 @@
                         <p class="text-stone-500 text-sm mb-4">Auto-aplicador de rapé feito à mão.</p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold text-amber-800">R$ 85,00</span>
-                            <button onclick="addToCart('Curipe 01a', 85)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Curipe 01b -->
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all hover:shadow-md">
-                    <div class="h-64 overflow-hidden bg-stone-200">
-                        <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeia7kzyntui6qqducxbgksofas7swe2tfjodjx3yhimulvugorlvmm" alt="Curipe 01b" class="w-full h-full object-cover transition-all duration-500">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-stone-800 mb-1">Curipe 01b</h3>
-                        <p class="text-stone-500 text-sm mb-4">Design exclusivo com acabamento natural.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-amber-800">R$ 85,00</span>
-                            <button onclick="addToCart('Curipe 01b', 85)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Curipes 02 -->
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all hover:shadow-md">
-                    <div class="h-64 overflow-hidden bg-stone-200">
-                        <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeic6762owgycifveqskud7kqdsegv3srar2kpvczu7z7ueu2ljdfyy" alt="Curipes 02" class="w-full h-full object-cover transition-all duration-500">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-stone-800 mb-1">Curipes 02</h3>
-                        <p class="text-stone-500 text-sm mb-4">Conjunto de curipes tradicionais.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-amber-800">R$ 90,00</span>
-                            <button onclick="addToCart('Curipes 02', 90)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tepis 02 -->
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all hover:shadow-md">
-                    <div class="h-64 overflow-hidden bg-stone-200">
-                        <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeid67hdkxm5nohnlvyr4efm7o3e3x4vursra2iwf5rjxlbe7anwyei" alt="Tepis 02" class="w-full h-full object-cover transition-all duration-500">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-stone-800 mb-1">Tepis 02</h3>
-                        <p class="text-stone-500 text-sm mb-4">Trabalho detalhado em madeira nobre.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-amber-800">R$ 130,00</span>
-                            <button onclick="addToCart('Tepis 02', 130)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Caixa Jatai -->
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all hover:shadow-md">
-                    <div class="h-64 overflow-hidden bg-stone-200">
-                        <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeiakeenuc3nsgg673cebilskiuqtlsrdwxhzw7ha5itqi5nca3mswu" alt="Caixa Jatai Grafismo" class="w-full h-full object-cover transition-all duration-500">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-stone-800 mb-1">Caixa Jatai Grafismo</h3>
-                        <p class="text-stone-500 text-sm mb-4">Caixa decorativa com grafismos ancestrais.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-amber-800">R$ 150,00</span>
-                            <button onclick="addToCart('Caixa Jatai Grafismo', 150)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Caximbo Cariri -->
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all hover:shadow-md">
-                    <div class="h-64 overflow-hidden bg-stone-200">
-                        <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeic7jtor3jswtb2hxezuoiz3ncu4cl2poleqhtsvfrr2gw4kkbulqa" alt="Caximbo Cariri" class="w-full h-full object-cover transition-all duration-500">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-stone-800 mb-1">Caximbo Cariri</h3>
-                        <p class="text-stone-500 text-sm mb-4">Peça ritualística da tradição Cariri.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-amber-800">R$ 110,00</span>
-                            <button onclick="addToCart('Caximbo Cariri', 110)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pulseiras Tuka -->
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all hover:shadow-md">
-                    <div class="h-64 overflow-hidden bg-stone-200">
-                        <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeibey3hhb5qt5fs3fgi5g3tgz6reddh3cg6wuozoa3yquks3vx4dwq" alt="Pulseiras Tuka" class="w-full h-full object-cover transition-all duration-500">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-stone-800 mb-1">Pulseiras Tuka</h3>
-                        <p class="text-stone-500 text-sm mb-4">Arte em miçangas com proteção e beleza.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-amber-800">R$ 40,00</span>
-                            <button onclick="addToCart('Pulseiras Tuka', 40)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <div class="flex gap-2">
+                                <button onclick="openExchangeForm('Curipe 01a')" class="text-xs text-amber-700 underline">🔄 Troca</button>
+                                <button onclick="addToCart('Curipe 01a', 85)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -257,9 +182,12 @@
                         <p class="text-stone-500 text-sm mb-4">O som do coração da terra em suas mãos.</p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold text-amber-800">R$ 450,00</span>
-                            <button onclick="addToCart('Tambor Xamanico', 450)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <div class="flex gap-2">
+                                <button onclick="openExchangeForm('Tambor Xamanico')" class="text-xs text-amber-700 underline">🔄 Troca</button>
+                                <button onclick="addToCart('Tambor Xamanico', 450)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -290,17 +218,45 @@
         </div>
     </section>
 
+    <!-- Cadastro de Item para Troca -->
+    <section id="cadastro-item" class="py-20 px-6 bg-white">
+        <div class="max-w-xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-center text-amber-900">
+                Cadastrar Item para Troca
+            </h2>
+            <p class="text-center text-stone-600 mb-8 text-sm">Tem algo para trocar? Envie os detalhes para avaliação manual. Após aprovado, adicionaremos seu item ao catálogo.</p>
+            
+            <form action="https://formspree.io/f/contatos.2dm@gmail.com" method="POST" class="space-y-4">
+                <input name="nome_item" placeholder="Nome do item" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition">
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input name="categoria" placeholder="Categoria (ex: Arte, Livro)" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition">
+                    <input name="quantidade" placeholder="Quantidade" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition">
+                </div>
+
+                <input name="localizacao" placeholder="Cidade / Estado" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition">
+                
+                <textarea name="descricao" placeholder="Descrição detalhada do item" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" rows="3"></textarea>
+                
+                <input name="foto" placeholder="Link da foto (Google Drive, Imgur, etc.)" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition">
+
+                <button type="submit" class="w-full bg-amber-900 text-white font-bold py-4 rounded-xl hover:bg-amber-800 transition shadow-lg">
+                    Enviar para Avaliação
+                </button>
+            </form>
+        </div>
+    </section>
+
     <!-- Kits Xamânicos Section -->
-    <section id="kits" class="py-20 px-6 bg-white">
+    <section id="kits" class="py-20 px-6 bg-stone-50">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold text-amber-900 mb-12 text-center">Kits Xamânicos Exclusivos</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-stone-50 p-8 rounded-3xl border border-stone-200 hover:border-amber-300 transition-all">
+                <div class="bg-white p-8 rounded-3xl border border-stone-200 hover:border-amber-300 transition-all">
                     <h3 class="text-2xl font-bold text-stone-800 mb-4">Kit Bem-Estar</h3>
                     <ul class="text-stone-600 mb-8 space-y-3">
                         <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Chás naturais sortidos</li>
                         <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Escalda pés aromático</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Cristais naturais</li>
                     </ul>
                     <p class="text-2xl font-bold text-amber-900 mb-6">R$ 280,00</p>
                     <button onclick="addToCart('Kit Bem-Estar', 280)" class="w-full py-3 border-2 border-stone-900 rounded-xl font-bold hover:bg-stone-900 hover:text-white transition">Adicionar Kit</button>
@@ -311,16 +267,14 @@
                     <ul class="text-amber-100 mb-8 space-y-3">
                         <li class="flex items-center gap-2"><i class="fas fa-check"></i> Incensos naturais</li>
                         <li class="flex items-center gap-2"><i class="fas fa-check"></i> Maracá pequeno</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Almofada aromática</li>
                     </ul>
                     <p class="text-2xl font-bold mb-6">R$ 320,00</p>
                     <button onclick="addToCart('Kit Meditação', 320)" class="w-full py-3 bg-white text-amber-900 rounded-xl font-bold hover:bg-amber-50 transition">Adicionar Kit</button>
                 </div>
-                <div class="bg-stone-50 p-8 rounded-3xl border border-stone-200 hover:border-amber-300 transition-all">
+                <div class="bg-white p-8 rounded-3xl border border-stone-200 hover:border-amber-300 transition-all">
                     <h3 class="text-2xl font-bold text-stone-800 mb-4">Kit Completo</h3>
                     <ul class="text-stone-600 mb-8 space-y-3">
                         <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Todos os itens acima</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Livro de rituais</li>
                         <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Cesta artesanal</li>
                     </ul>
                     <p class="text-2xl font-bold text-amber-900 mb-6">R$ 580,00</p>
@@ -331,7 +285,7 @@
     </section>
 
     <!-- Artesãos Section -->
-    <section id="artesaos" class="py-20 px-6 bg-stone-50">
+    <section id="artesaos" class="py-20 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold text-amber-900 mb-12 text-center">Conheça Nossos Artesãos</h2>
             <div class="grid md:grid-cols-3 gap-8 mb-16">
@@ -359,29 +313,17 @@
             </div>
 
             <!-- Form Tornar-se Artesão -->
-            <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-stone-200">
+            <div class="max-w-2xl mx-auto bg-stone-50 p-8 md:p-12 rounded-3xl shadow-sm border border-stone-200">
                 <h3 class="text-2xl font-bold text-amber-900 mb-6 text-center">Torne-se um Artesão Patrocinador</h3>
                 <form action="https://formspree.io/f/contatos.2dm@gmail.com" method="POST" class="space-y-4">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <input type="text" name="nome" placeholder="Seu Nome" class="w-full p-4 bg-stone-50 border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required>
-                        <input type="email" name="email" placeholder="Seu E-mail" class="w-full p-4 bg-stone-50 border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required>
+                        <input type="text" name="nome" placeholder="Seu Nome" class="w-full p-4 bg-white border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required>
+                        <input type="email" name="email" placeholder="Seu E-mail" class="w-full p-4 bg-white border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required>
                     </div>
-                    <input type="tel" name="whatsapp" placeholder="Seu WhatsApp" class="w-full p-4 bg-stone-50 border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required>
-                    <textarea name="mensagem" placeholder="Conte-nos sobre sua arte..." rows="4" class="w-full p-4 bg-stone-50 border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required></textarea>
-                    <button type="submit" class="w-full bg-amber-900 text-white font-bold py-4 rounded-xl hover:bg-amber-800 transition shadow-lg shadow-amber-100">Enviar Candidatura</button>
+                    <input type="tel" name="whatsapp" placeholder="Seu WhatsApp" class="w-full p-4 bg-white border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required>
+                    <textarea name="mensagem" placeholder="Conte-nos sobre sua arte..." rows="4" class="w-full p-4 bg-white border border-stone-100 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none transition" required></textarea>
+                    <button type="submit" class="w-full bg-amber-900 text-white font-bold py-4 rounded-xl hover:bg-amber-800 transition shadow-lg">Enviar Candidatura</button>
                 </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Apoiadores -->
-    <section class="py-12 px-6 border-t border-stone-200">
-        <div class="max-w-7xl mx-auto text-center">
-            <p class="text-xs font-bold uppercase tracking-widest text-stone-400 mb-8">Nossos Apoiadores</p>
-            <div class="flex flex-wrap justify-center items-center gap-12 opacity-60 grayscale hover:grayscale-0 transition-all">
-                <span class="text-xl font-bold text-stone-800">2dM</span>
-                <span class="text-xl font-bold text-stone-800">Aldeia Cariri-Xocó</span>
-                <span class="text-xl font-bold text-stone-800">Lá no Astral</span>
             </div>
         </div>
     </section>
@@ -392,7 +334,7 @@
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-2">
                     <h3 class="text-2xl font-bold mb-6 text-amber-500">2dM Artesanato</h3>
-                    <p class="text-stone-400 max-w-md mb-6">Promovendo artes originárias com entrega física garantida e autenticidade comprovada. Valorizamos o trabalho manual e a cultura ancestral.</p>
+                    <p class="text-stone-400 max-w-md mb-6">Promovendo artes originárias com autenticidade comprovada. Valorizamos o trabalho manual e a cultura ancestral.</p>
                     <div class="flex gap-4">
                         <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-amber-700 transition"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-amber-700 transition"><i class="fab fa-whatsapp"></i></a>
@@ -402,9 +344,7 @@
                     <h4 class="font-bold mb-6 text-stone-200">Links Úteis</h4>
                     <ul class="space-y-4 text-stone-400">
                         <li><a href="#" class="hover:text-white transition">Página Oficial 2dM</a></li>
-                        <li><a href="#" class="hover:text-white transition">Grupo de WhatsApp</a></li>
                         <li><a href="#artesaos" class="hover:text-white transition">Sobre Nós</a></li>
-                        <li><a href="#" class="hover:text-white transition">Política de Entrega</a></li>
                     </ul>
                 </div>
                 <div>
@@ -415,16 +355,55 @@
             </div>
             <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-stone-500">
                 <p>&copy; 2024 2dM Artesanato. Todos os direitos reservados.</p>
-                <p class="italic">De acordo com a lei de artesãos, todos os direitos reservados. Artes Originárias com Propósito.</p>
             </div>
         </div>
     </footer>
 
-    <!-- QR Code Modal -->
+    <!-- MODAIS -->
+
+    <!-- Member Modal -->
+    <div id="memberModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4">
+        <div class="bg-white p-8 rounded-3xl max-w-md w-full text-center shadow-2xl">
+            <h3 class="text-2xl font-bold text-amber-900 mb-4">Acesso ao Ateliê 2dM</h3>
+            <p class="text-sm text-stone-600 mb-8 text-left">
+                Para participar das trocas, é necessário:
+                <br>• Doação de R$10 OU  
+                <br>• Receber o livro "Início do Caminhar"
+                <br><br>
+                <span class="italic text-xs">A validação é feita manualmente pelo Guardião.</span>
+            </p>
+            <button onclick="joinViaWhats()" class="w-full bg-green-600 text-white py-4 rounded-xl mb-4 font-bold hover:bg-green-700 transition">
+                Falar com Guardião (WhatsApp)
+            </button>
+            <a href="https://forms.gle/SEU_FORM_AQUI" target="_blank" class="block w-full border-2 border-stone-100 py-4 rounded-xl mb-4 font-bold hover:bg-stone-50 transition">
+                Preencher Cadastro
+            </a>
+            <button onclick="closeMemberModal()" class="text-stone-400 hover:text-stone-600 transition text-sm">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Exchange Modal -->
+    <div id="exchangeModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4">
+        <div class="bg-white p-8 rounded-3xl max-w-md w-full shadow-2xl">
+            <h3 class="text-xl font-bold mb-4 text-amber-900">Propor Troca</h3>
+            <p class="text-xs text-stone-500 mb-6 italic">Sua proposta será enviada por e-mail para análise manual. Conectaremos as partes via WhatsApp após aprovação.</p>
+            <form action="https://formspree.io/f/contatos.2dm@gmail.com" method="POST" class="space-y-4">
+                <input type="hidden" name="item_desejado" id="itemDesejado">
+                <input name="nome" placeholder="Seu nome" required class="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
+                <input name="email" placeholder="Seu email" required class="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
+                <textarea name="oferta" placeholder="O que você oferece em troca?" required class="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500" rows="3"></textarea>
+                <input name="link" placeholder="Link do item (opcional)" class="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
+                <button type="submit" class="w-full bg-amber-900 text-white py-4 rounded-xl font-bold hover:bg-amber-800 transition">Enviar Proposta</button>
+                <button type="button" onclick="closeExchangeModal()" class="w-full text-stone-400 mt-2 text-sm">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pix QR Code Modal -->
     <div id="qrModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-6">
         <div class="bg-white rounded-3xl max-w-sm w-full p-8 text-center shadow-2xl">
             <h3 class="text-2xl font-bold text-amber-900 mb-2">Pagamento via Pix</h3>
-            <p class="text-stone-500 text-sm mb-6">Escaneie o QR Code abaixo para realizar o pagamento via e-mail: <br><strong>contatos.2dm@gmail.com</strong></p>
+            <p class="text-stone-500 text-sm mb-6">Escaneie o QR Code ou use o e-mail: <br><strong>contatos.2dm@gmail.com</strong></p>
             <div class="bg-stone-50 p-4 rounded-2xl mb-6 border border-stone-100">
                 <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663124222205/vmWifenzaPICUctf.png" alt="QR Code Pix" class="w-full aspect-square object-contain">
             </div>
@@ -436,11 +415,19 @@
         let cart = [];
         const whatsappNumber = "5511992451218";
 
+        // Filtro de Busca Dinâmico
+        function filterProducts(query) {
+            const cards = document.querySelectorAll(".product-card");
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query.toLowerCase()) ? "block" : "none";
+            });
+        }
+
+        // Funções do Carrinho
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCartUI();
-            
-            // Feedback visual
             const badge = document.getElementById('cartBadge');
             badge.classList.remove('hidden');
             badge.classList.add('animate-bounce');
@@ -491,35 +478,39 @@
                 alert("Seu carrinho está vazio!");
                 return;
             }
-
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             let message = "🌿 *Novo Pedido - 2dM Artesanato*\n\n";
-            message += "Olá! Gostaria de finalizar a compra dos seguintes itens:\n\n";
-            
             cart.forEach((item, i) => {
                 message += `${i + 1}. *${item.name}* - R$ ${item.price.toFixed(2)}\n`;
             });
-
-            message += `\n💰 *Total: R$ ${total.toFixed(2)}*\n`;
-            message += "\n--- \nAguardo as instruções para entrega e pagamento. Gratidão! 🙏";
-
-            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
+            message += `\n💰 *Total: R$ ${total.toFixed(2)}*\n\nGratidão! 🙏`;
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        function openQRModal() {
-            document.getElementById('qrModal').classList.remove('hidden');
+        // Funções de Modais
+        function openMemberModal() { document.getElementById('memberModal').classList.remove('hidden'); }
+        function closeMemberModal() { document.getElementById('memberModal').classList.add('hidden'); }
+        
+        function openExchangeForm(item) {
+            document.getElementById("exchangeModal").classList.remove("hidden");
+            document.getElementById("itemDesejado").value = item;
+        }
+        function closeExchangeModal() { document.getElementById('exchangeModal').classList.add('hidden'); }
+
+        function openQRModal() { document.getElementById('qrModal').classList.remove('hidden'); }
+        function closeQRModal() { document.getElementById('qrModal').classList.add('hidden'); }
+
+        function joinViaWhats() {
+            const msg = encodeURIComponent("Olá! Quero me tornar membro do Ateliê 2dM 🌿");
+            window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
         }
 
-        function closeQRModal() {
-            document.getElementById('qrModal').classList.add('hidden');
+        // Fechar modais ao clicar fora
+        window.onclick = function(event) {
+            if (event.target.id === 'memberModal') closeMemberModal();
+            if (event.target.id === 'exchangeModal') closeExchangeModal();
+            if (event.target.id === 'qrModal') closeQRModal();
         }
-
-        // Fechar modal ao clicar fora
-        document.getElementById('qrModal').addEventListener('click', function(e) {
-            if (e.target === this) closeQRModal();
-        });
     </script>
-
 </body>
 </html>
