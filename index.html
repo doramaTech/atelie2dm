@@ -43,16 +43,26 @@
             <div class="flex items-center gap-4">
                 <h1 class="text-2xl font-bold text-amber-900">2dM Artesanato</h1>
             </div>
-            <nav class="hidden md:flex gap-8 font-medium text-stone-600 items-center">
+            <nav class="hidden md:flex gap-6 font-medium text-stone-600 items-center">
                 <a href="#produtos" class="hover:text-amber-700 transition">Produtos</a>
-                <a href="#kits" class="hover:text-amber-700 transition">Kits Xamânicos</a>
+                <a href="#kits" class="hover:text-amber-700 transition">Kits</a>
                 <a href="#areaMembro" id="navAreaMembro" class="hidden hover:text-amber-700 transition font-bold text-green-700">Painel de Trocas</a>
-                <button id="btnLogin" onclick="openLogin()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white transition">
-                    Entrar como Membro
+                
+                <!-- Botão para se tornar membro (sempre visível ou muda se logado) -->
+                <button id="btnBecomeMember" onclick="openMemberModal()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white transition">
+                    👤 Membro 2dM
                 </button>
-                <button id="btnMemberInfo" onclick="openMemberModal()" class="border border-stone-200 text-stone-600 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-stone-100 transition">
-                    👤 Sobre Membros
-                </button>
+
+                <!-- Botão de Login / Logout -->
+                <div class="flex items-center gap-2 border-l border-stone-200 pl-4">
+                    <button id="btnLogin" onclick="openLogin()" class="text-stone-500 hover:text-amber-700 text-sm font-bold transition">
+                        Entrar
+                    </button>
+                    <button id="btnLogout" onclick="logoutMembro()" class="hidden text-red-500 hover:text-red-700 text-sm font-bold transition">
+                        Sair
+                    </button>
+                </div>
+
                 <a href="#carrinho" class="relative hover:text-amber-700 transition">
                     <i class="fas fa-shopping-cart text-xl"></i>
                     <span id="cartBadge" class="absolute -top-2 -right-3 bg-amber-700 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
@@ -292,43 +302,6 @@
         </div>
     </section>
 
-    <!-- Kits Xamânicos Section -->
-    <section id="kits" class="py-20 px-6 bg-stone-50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-amber-900 mb-12 text-center">Kits Xamânicos Exclusivos</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-3xl border border-stone-200 hover:border-amber-300 transition-all">
-                    <h3 class="text-2xl font-bold text-stone-800 mb-4">Kit Bem-Estar</h3>
-                    <ul class="text-stone-600 mb-8 space-y-3">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Chás naturais sortidos</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Escalda pés aromático</li>
-                    </ul>
-                    <p class="text-2xl font-bold text-amber-900 mb-6">R$ 280,00</p>
-                    <button onclick="addToCart('Kit Bem-Estar', 280)" class="w-full py-3 border-2 border-stone-900 rounded-xl font-bold hover:bg-stone-900 hover:text-white transition">Adicionar Kit</button>
-                </div>
-                <div class="bg-amber-900 p-8 rounded-3xl border border-amber-800 text-white transform md:-translate-y-4 shadow-2xl">
-                    <div class="bg-amber-700 text-[10px] uppercase tracking-widest font-bold py-1 px-3 rounded-full inline-block mb-4">Mais Procurado</div>
-                    <h3 class="text-2xl font-bold mb-4">Kit Meditação</h3>
-                    <ul class="text-amber-100 mb-8 space-y-3">
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Incensos naturais</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Maracá pequeno</li>
-                    </ul>
-                    <p class="text-2xl font-bold mb-6">R$ 320,00</p>
-                    <button onclick="addToCart('Kit Meditação', 320)" class="w-full py-3 bg-white text-amber-900 rounded-xl font-bold hover:bg-amber-50 transition">Adicionar Kit</button>
-                </div>
-                <div class="bg-white p-8 rounded-3xl border border-stone-200 hover:border-amber-300 transition-all">
-                    <h3 class="text-2xl font-bold text-stone-800 mb-4">Kit Completo</h3>
-                    <ul class="text-stone-600 mb-8 space-y-3">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Todos os itens acima</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-amber-700"></i> Cesta artesanal</li>
-                    </ul>
-                    <p class="text-2xl font-bold text-amber-900 mb-6">R$ 580,00</p>
-                    <button onclick="addToCart('Kit Completo', 580)" class="w-full py-3 border-2 border-stone-900 rounded-xl font-bold hover:bg-stone-900 hover:text-white transition">Adicionar Kit</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="bg-stone-900 text-white py-16 px-6">
         <div class="max-w-7xl mx-auto text-center md:text-left">
@@ -368,20 +341,27 @@
         </div>
     </div>
 
-    <!-- Member Info Modal -->
+    <!-- Member Info Modal (Tornar-se Membro) -->
     <div id="memberModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4">
         <div class="bg-white p-8 rounded-3xl max-w-md w-full text-center shadow-2xl">
             <h3 class="text-2xl font-bold text-amber-900 mb-4">Torne-se Membro do Ateliê 2dM</h3>
-            <p class="text-sm text-stone-600 mb-8 text-left">
-                Para participar das trocas e acessar o painel exclusivo, é necessário:
-                <br>• Doação de R$10 OU  
-                <br>• Receber o livro "Início do Caminhar"
-                <br><br>
-                <span class="italic text-xs text-amber-700">A validação é feita manualmente pelo Guardião.</span>
-            </p>
-            <button onclick="joinViaWhats()" class="w-full bg-green-600 text-white py-4 rounded-xl mb-4 font-bold hover:bg-green-700 transition">
-                Falar com Guardião (WhatsApp)
+            <div class="text-sm text-stone-600 mb-8 text-left space-y-4">
+                <p>Para participar das trocas e acessar o painel exclusivo, é necessário:</p>
+                <ul class="space-y-2">
+                    <li>• Doação de <strong>R$ 10,00</strong> OU</li>
+                    <li>• Receber o livro <strong>"Início do Caminhar"</strong> (Ebook incluso na doação)</li>
+                </ul>
+                <p class="italic text-xs text-amber-700">A validação é feita manualmente pelo Guardião após o envio do cadastro.</p>
+            </div>
+            
+            <button onclick="joinViaWhats()" class="w-full bg-green-600 text-white py-4 rounded-xl mb-3 font-bold hover:bg-green-700 transition flex items-center justify-center gap-2">
+                <i class="fab fa-whatsapp"></i> Falar com Guardião
             </button>
+            
+            <a href="https://forms.gle/SEU_FORM_AQUI" target="_blank" class="block w-full border-2 border-stone-100 py-4 rounded-xl mb-4 font-bold hover:bg-stone-50 transition">
+                Preencher Cadastro
+            </a>
+
             <button onclick="closeMemberModal()" class="text-stone-400 hover:text-stone-600 transition text-sm">Fechar</button>
         </div>
     </div>
@@ -431,13 +411,13 @@
 
     <script>
         // --- BASE DE DADOS E ESTADO ---
-        const membrosValidados = ["contatos.2dm@gmail.com", "membro@2dm.com"]; // Adicione seus e-mails aqui
+        const membrosValidados = ["contatos.2dm@gmail.com", "membro@2dm.com"]; 
         let usuarioLogado = null;
         let cart = [];
         const whatsappNumber = "5511992451218";
         const groupLink = "https://chat.whatsapp.com/SEU_LINK_DO_GRUPO";
 
-        // --- SISTEMA DE LOGIN ---
+        // --- SISTEMA DE LOGIN / LOGOUT ---
         function openLogin() { document.getElementById("loginModal").classList.remove("hidden"); }
         function closeLogin() { document.getElementById("loginModal").classList.add("hidden"); }
 
@@ -454,13 +434,23 @@
             }
         }
 
+        function logoutMembro() {
+            usuarioLogado = null;
+            localStorage.removeItem("2dm_user");
+            document.getElementById("areaMembro").classList.add("hidden");
+            document.getElementById("memberBanner").classList.add("hidden");
+            document.getElementById("navAreaMembro").classList.add("hidden");
+            document.getElementById("btnLogout").classList.add("hidden");
+            document.getElementById("btnLogin").classList.remove("hidden");
+            alert("Você saiu da área de membros.");
+        }
+
         function liberarAreaMembro() {
             document.getElementById("areaMembro").classList.remove("hidden");
             document.getElementById("memberBanner").classList.remove("hidden");
             document.getElementById("navAreaMembro").classList.remove("hidden");
-            document.getElementById("btnLogin").textContent = "Membro Ativo";
-            document.getElementById("btnLogin").classList.replace("border-amber-900", "bg-green-600");
-            document.getElementById("btnLogin").classList.replace("text-amber-900", "text-white");
+            document.getElementById("btnLogin").classList.add("hidden");
+            document.getElementById("btnLogout").classList.remove("hidden");
         }
 
         // --- INICIALIZAÇÃO ---
