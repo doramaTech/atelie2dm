@@ -53,52 +53,67 @@
                 <h1 class="text-xl md:text-2xl font-bold text-amber-900">2dM Artesanato</h1>
             </div>
             
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex gap-6 font-medium text-stone-600 items-center">
-                <a href="#produtos" class="hover:text-amber-700 transition">Produtos</a>
-                <a href="#kits" class="hover:text-amber-700 transition">Kits</a>
-                <a href="#artesaos" class="hover:text-amber-700 transition">Artesãos</a>
-                <a href="#areaMembro" id="navAreaMembro" class="hidden hover:text-amber-700 transition font-bold text-green-700">Painel de Trocas</a>
-                <button onclick="openMemberModal()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white transition">
-                    👤 Membro 2dM
-                </button>
-                <div class="flex items-center gap-2 border-l border-stone-200 pl-4">
-                    <button id="btnLogin" onclick="openLogin()" class="text-stone-500 hover:text-amber-700 text-sm font-bold transition">Entrar</button>
-                    <button id="btnLogout" onclick="logoutMembro()" class="hidden text-red-500 hover:text-red-700 text-sm font-bold transition">Sair</button>
-                </div>
-                <a href="#carrinho" class="relative hover:text-amber-700 transition ml-2">
-                    <i class="fas fa-shopping-cart text-xl"></i>
-                    <span id="cartBadge" class="absolute -top-2 -right-3 bg-amber-700 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
-                </a>
-            </nav>
-            <button onclick="openQRModal()" class="bg-amber-900 text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-amber-800 transition flex items-center gap-2">
+<header class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+
+        <!-- Logo -->
+        <h1 class="text-lg md:text-2xl font-bold text-amber-900 whitespace-nowrap">
+            2dM Artesanato
+        </h1>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex gap-6 font-medium text-stone-600 items-center">
+            <a href="#produtos" class="hover:text-amber-700">Produtos</a>
+            <a href="#kits" class="hover:text-amber-700">Kits</a>
+            <a href="#artesaos" class="hover:text-amber-700">Artesãos</a>
+
+            <a href="#areaMembro" id="navAreaMembro" class="hidden font-bold text-green-700">
+                Painel de Trocas
+            </a>
+
+            <button onclick="openMemberModal()" class="border border-amber-900 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-900 hover:text-white">
+                👤 Membro 2dM
+            </button>
+
+            <div class="flex items-center gap-2 border-l pl-4">
+                <button id="btnLogin" onclick="openLogin()" class="text-sm font-bold">Entrar</button>
+                <button id="btnLogout" onclick="logoutMembro()" class="hidden text-red-500 text-sm font-bold">Sair</button>
+            </div>
+
+            <!-- Carrinho -->
+            <a href="#carrinho" class="relative ml-2">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <span id="cartBadge" class="absolute -top-2 -right-3 bg-amber-700 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+            </a>
+
+            <!-- WhatsApp -->
+            <button onclick="openQRModal()" class="bg-amber-900 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
                 <i class="fab fa-whatsapp"></i> Finalizar via Zap
             </button>
-            </div>
-            </nav>
+        </nav>
 
-            <!-- Mobile Actions -->
-            <div class="flex md:hidden items-center gap-4">
-                <button id="btnLoginMobile" onclick="openLogin()" class="text-stone-500 text-sm font-bold">Entrar</button>
-                <button id="btnLogoutMobile" onclick="logoutMembro()" class="hidden text-red-500 text-sm font-bold">Sair</button>
-                <button onclick="toggleMobileMenu()" class="text-amber-900 text-2xl">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
-            </div>
+        <!-- Mobile Actions -->
+        <div class="flex md:hidden items-center gap-3">
+
+            <!-- Carrinho (sempre visível) -->
+            <a href="#carrinho" class="relative">
+                <i class="fas fa-shopping-cart text-xl text-amber-900"></i>
+                <span id="cartBadgeMobile" class="absolute -top-2 -right-2 bg-amber-700 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+            </a>
+
+            <!-- WhatsApp (sempre visível) -->
+            <button onclick="openQRModal()" class="bg-green-600 text-white px-3 py-2 rounded-full text-sm flex items-center gap-1">
+                <i class="fab fa-whatsapp"></i>
+                <span class="hidden sm:inline">Finalizar</span>
+            </button>
+
+            <!-- Menu -->
+            <button onclick="toggleMobileMenu()" class="text-2xl text-amber-900">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
         </div>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobileMenu" class="fixed inset-y-0 right-0 w-64 bg-white shadow-2xl z-[70] md:hidden p-8 flex flex-col gap-6">
-        <button onclick="toggleMobileMenu()" class="self-end text-2xl text-stone-400 mb-4"><i class="fas fa-times"></i></button>
-        <a href="#produtos" onclick="toggleMobileMenu()" class="text-lg font-bold text-stone-800">Produtos</a>
-        <a href="#kits" onclick="toggleMobileMenu()" class="text-lg font-bold text-stone-800">Kits</a>
-        <a href="#artesaos" onclick="toggleMobileMenu()" class="text-lg font-bold text-stone-800">Artesãos</a>
-        <a href="#areaMembro" id="navAreaMembroMobile" onclick="toggleMobileMenu()" class="hidden text-lg font-bold text-green-700">Painel de Trocas</a>
-        <button onclick="openMemberModal(); toggleMobileMenu()" class="bg-amber-900 text-white py-3 rounded-xl font-bold">👤 Membro 2dM</button>
-        <hr class="border-stone-100">
-        <a href="#carrinho" onclick="toggleMobileMenu()" class="flex items-center gap-2 text-stone-600"><i class="fas fa-shopping-cart"></i> Carrinho</a>
     </div>
+</header>
 
     <!-- Hero & News Section -->
     <section class="bg-stone-100 border-b border-stone-200">
@@ -169,25 +184,6 @@
             </div>
             
             <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Pentes -->
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 transition-all">
-                    <div class="h-64 overflow-hidden bg-stone-200">
-                        <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeibgqjbvzrbo6sa2vuveq7tsphmd4pmmfjwinw5yvntoiwxcsjto5y" alt="Pentes" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-stone-800 mb-1">Pentes Tampa Reciclada</h3>
-                        <p class="text-stone-500 text-sm mb-4">Sustentabilidade e arte em cada detalhe.</p>
-                        <div class="flex justify-between items-center mt-4">
-                            <span class="text-xl font-bold text-amber-800">R$ 45,00</span>
-                            <div class="flex gap-2">
-                                <button onclick="openExchangeForm('Pentes Tampa Reciclada')" class="text-xs text-amber-700 underline">🔄 Troca</button>
-                                <button onclick="addToCart('Pentes Tampa Reciclada', 45)" class="bg-stone-900 text-white p-2 rounded-lg hover:bg-amber-800 transition">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- Tepi 01 -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100">
                     <img src="https://tan-secret-seahorse-725.mypinata.cloud/ipfs/bafybeiaizsobr6fxw6grcbiuufodp5oewv4aaz7rfdixzhrm2nkpx2zzcu" class="h-64 w-full object-cover">
@@ -562,7 +558,6 @@
                 <div>
                     <h4 class="font-bold mb-6 text-stone-200">Contato</h4>
                     <p class="text-stone-400 mb-2">contatos.2dm@gmail.com</p>
-                    <p class="text-stone-400">WhatsApp: 11 99245-1218</p>
                 </div>
             </div>
             <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-stone-500">
