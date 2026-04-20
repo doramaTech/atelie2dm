@@ -687,30 +687,67 @@
             });
         }
 
+        // Funções do Carrinho
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCartUI();
             const badge = document.getElementById('cartBadge');
             badge.classList.remove('hidden');
-            badge.textContent = cart.length;
+            badge.classList.add('animate-bounce');
+            setTimeout(() => badge.classList.remove('animate-bounce'), 1000);
         }
 
         function updateCartUI() {
-            const items = document.getElementById('cartItems');
-            const total = document.getElementById('cartTotal');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartBadge = document.getElementById('cartBadge');
+            
             if (cart.length === 0) {
-                items.innerHTML = '<p class="text-stone-400 text-center italic">Seu carrinho está vazio.</p>';
-                total.textContent = 'R$ 0,00';
+                cartItems.innerHTML = '<p class="text-stone-400 text-center italic">Seu carrinho está vazio.</p>';
+                cartTotal.textContent = 'R$ 0,00';
+                cartBadge.classList.add('hidden');
                 return;
             }
-            items.innerHTML = cart.map((item, i) => `<div class="flex justify-between p-3 bg-stone-50 rounded-xl border border-stone-100"><span>${item.name}</span><b>R$ ${item.price.toFixed(2)}</b></div>`).join('');
-            total.textContent = `R$ ${cart.reduce((s, i) => s + i.price, 0).toFixed(2)}`;
+
+            cartBadge.textContent = cart.length;
+            cartBadge.classList.remove('hidden');
+
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div class="flex justify-between items-center bg-stone-50 p-4 rounded-xl border border-stone-100">
+                    <div>
+                        <p class="font-bold text-stone-800">${item.name}</p>
+                        <p class="text-xs text-stone-500">Artesanato Originário</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="font-bold text-amber-800">R$ ${item.price.toFixed(2)}</span>
+                        <button onclick="removeFromCart(${index})" class="text-stone-300 hover:text-red-500 transition">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotal.textContent = `R$ ${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
         }
 
         function finishOrder() {
-            if (cart.length === 0) return alert("Carrinho vazio!");
-            let msg = "🌿 *Pedido Ateliê 2dM*\n\n" + cart.map(i => `- ${i.name}`).join("\n");
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+            if (cart.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            let message = "🌿 *Novo Pedido - 2dM Artesanato*\n\n";
+            cart.forEach((item, i) => {
+                message += `${i + 1}. *${item.name}* - R$ ${item.price.toFixed(2)}\n`;
+            });
+            message += `\n💰 *Total: R$ ${total.toFixed(2)}*\n\nGratidão! 🙏`;
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
         function openMemberModal() { document.getElementById('memberModal').classList.remove('hidden'); }
