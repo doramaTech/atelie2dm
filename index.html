@@ -792,12 +792,39 @@
     <section class="py-16 px-6 bg-amber-900 text-white text-center">
         <div class="max-w-2xl mx-auto">
             <h2 class="text-3xl font-bold mb-4 leading-tight">Quer participar das trocas comunitárias?</h2>
-            <p class="mb-8 text-amber-100">Torne-se membro por apenas R$10 e receba o livro <strong>"Início do Caminhar"</strong> (Ebook).</p>
-            <button onclick="openMemberModal()" class="bg-white text-amber-900 px-8 py-4 rounded-full font-bold hover:bg-amber-50 transition shadow-xl flex items-center gap-2 mx-auto">
+            <p class="mb-8 text-amber-100">
+                Torne-se membro por apenas R$10 e receba o livro 
+                <strong>"Lidando com Minhas Sombras"</strong> (Ebook).
+            </p>
+    
+            <button 
+                onclick="baixarEbook()" 
+                class="bg-white text-amber-900 px-8 py-4 rounded-full font-bold hover:bg-amber-50 transition shadow-xl flex items-center gap-2 mx-auto"
+            >
                 <i class="fas fa-book-open"></i> Baixar Ebook & Torne-se Membro
             </button>
         </div>
     </section>
+    
+    <script>
+    function baixarEbook() {
+        // abre livro
+        window.open(
+            'https://www.amazon.com.br/Lidando-com-Minhas-Sombras-Muitos-ebook/dp/B0FJZTK9R4',
+            '_blank'
+        );
+    
+        // abre whatsapp
+        const mensagem = encodeURIComponent(
+            'Olá! Quero confirmar o recebimento do PDF do livro "Lidando com Minhas Sombras".'
+        );
+    
+        window.open(
+            'https://wa.me/5511992451218?text=' + mensagem,
+            '_blank'
+        );
+    }
+    </script>
 
     <!-- Cadastro de Item para Troca -->
     <section id="cadastro-item" class="py-20 px-6 bg-white">
